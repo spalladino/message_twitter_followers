@@ -1,0 +1,13 @@
+name: message_twitter_followers
+version: 0.1.0
+
+authors:
+  - Santiago Palladino <spalladino@gmail.com>
+
+targets:
+  message_twitter_followers:
+    main: src/message_twitter_followers.cr
+
+crystal: 0.35.0
+
+license: MIT
