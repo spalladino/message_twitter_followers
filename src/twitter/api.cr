@@ -7,7 +7,7 @@ module Twitter::API
     { Twitter::Response::IDs.from_json(response.body), RateLimit.from_headers(response.headers) }
   end
 
-  def users_lookup(user_ids : Array(UInt64)) : { Twitter::Response::Users, RateLimit }
+  def users_lookup(user_ids : Array(Int64)) : { Twitter::Response::Users, RateLimit }
     response = post("users/lookup", { user_id: user_ids.map(&.to_s).join(",") })
     { Twitter::Response::Users.from_json(response.body), RateLimit.from_headers(response.headers) }
   end
@@ -17,7 +17,7 @@ module Twitter::API
     { Twitter::Response::RateLimitStatus.from_json(response.body), RateLimit.from_headers(response.headers) }
   end
 
-  def send_dm(recipient : UInt64, message : String)
+  def send_dm(recipient : Int64, message : String)
     response = post_json("direct_messages/events/new", { 
       "event" => { 
         "type" => "message_create", 
