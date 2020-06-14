@@ -38,23 +38,29 @@ module Twitter
       handle_response(response)
     end
 
+    def post_json(path : String, object)
+      fullpath = "/1.1/#{path}.json"
+      response = @http_client.post(fullpath, headers: HTTP::Headers{ "Content-Type" => "application/json" }, body: object.to_json)
+      handle_response(response)
+    end
+
     private def handle_response(response : HTTP::Client::Response)
       case response.status_code
       when 200..299
         response
       when 400..499
-        message = Twitter::Errors.from_json(response.body).errors.first.message
-        raise Twitter::Errors::ClientError.new(message)
+        message = Twitter::Error.from_json(response.body).error rescue "Unknown client error: #{response.body.presence || "[empty]"}"
+        raise Twitter::ClientError.new(message)
       when 500
-        raise Twitter::Errors::ServerError.new("Internal Server Error")
+        raise Twitter::ServerError.new("Internal Server Error")
       when 502
-        raise Twitter::Errors::ServerError.new("Bad Gateway")
+        raise Twitter::ServerError.new("Bad Gateway")
       when 503
-        raise Twitter::Errors::ServerError.new("Service Unavailable")
+        raise Twitter::ServerError.new("Service Unavailable")
       when 504
-        raise Twitter::Errors::ServerError.new("Gateway Timeout")
+        raise Twitter::ServerError.new("Gateway Timeout")
       else
-        raise Twitter::Errors::ClientError.new("Unexpected response")
+        raise Twitter::ClientError.new("Unexpected response")
       end
     end
 

@@ -4,12 +4,6 @@ module Twitter::Models
   class User
     include JSON::Serializable
     
-    @[JSON::Field(key: "protected")]
-    property user_protected : Bool
-
-    @[JSON::Field(converter: Time::Format.new("%a %b %d %T +0000 %Y"))]
-    property created_at : Time
-    
     property default_profile : Bool
     property default_profile_image : Bool
     property favourites_count : Int32
@@ -19,16 +13,22 @@ module Twitter::Models
     property listed_count : Int32
     property location : String
     property name : String
-    property needs_phone_verification : Bool?
     property profile_banner_url : String?
     property profile_image_url_https : String
     property screen_name : String
-    # property status : Status?
     property statuses_count : Int32
     property suspended : Bool?
     property verified : Bool
     property description : String
+    
+    # property status : Status?
     # property entities : UserEntities?
+
+    @[JSON::Field(key: "protected")]
+    property user_protected : Bool
+
+    @[JSON::Field(converter: Time::Format.new("%a %b %d %T +0000 %Y"))]
+    property created_at : Time
 
     def_equals id
   end

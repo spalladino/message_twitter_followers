@@ -16,4 +16,21 @@ module Twitter::API
     response = get("application/rate_limit_status")
     { Twitter::Response::RateLimitStatus.from_json(response.body), RateLimit.from_headers(response.headers) }
   end
+
+  def send_dm(recipient : UInt64, message : String)
+    response = post_json("direct_messages/events/new", { 
+      "event" => { 
+        "type" => "message_create", 
+        "message_create" => {
+          "target" => { "recipient_id" => recipient.to_s },
+          "message_data" => { "text" => message }
+        }
+      }
+    })
+  end
+
+  def verify_credentials
+    response = get("account/verify_credentials", { "include_entities" => "false" })
+    { Twitter::Response::User.from_json(response.body), RateLimit.from_headers(response.headers) }
+  end
 end
