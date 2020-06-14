@@ -2,11 +2,12 @@ require "./models"
 
 module Twitter
   class ServerError < Exception; end
+
   class ClientError < Exception; end
 
   struct Error
     include JSON::Serializable
-      property error : String
+    property error : String
   end
 
   class Response::IDs

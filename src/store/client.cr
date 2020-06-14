@@ -15,7 +15,7 @@ class Store::Client
     @db
   end
 
-  def create_schema()
+  def create_schema
     @db.exec <<-SQL
       CREATE TABLE IF NOT EXISTS followers (
         id UNSIGNED BIG INT PRIMARY KEY, 
@@ -55,7 +55,7 @@ class Store::Client
   def insert_follower_ids(ids : Array(Int64))
     ids.in_groups_of(@insert_batch_size) do |chunk|
       values = chunk.reject(&.nil?)
-      query = values.size.times.map{"(?)"}.join(",")
+      query = values.size.times.map { "(?)" }.join(",")
       db.exec "INSERT INTO followers (id) VALUES #{query}", args: values
     end
   end
@@ -100,7 +100,7 @@ class Store::Client
     "SELECT id FROM followers WHERE name IS NULL"
   end
 
-  def unknown_followers()
+  def unknown_followers
     @db.query unknown_followers_query do |rs|
       rs.each do
         yield rs.read(Int64)
@@ -108,7 +108,7 @@ class Store::Client
     end
   end
 
-  def unknown_followers_all()
+  def unknown_followers_all
     @db.query_all unknown_followers_query, as: Int64
   end
 
@@ -116,7 +116,7 @@ class Store::Client
     "SELECT id, name FROM followers WHERE message_sent_at IS NULL AND name IS NOT NULL"
   end
 
-  def unmessaged_followers()
+  def unmessaged_followers
     @db.query unmessaged_followers_query do |rs|
       rs.each do
         yield rs.read(Int64), rs.read(String)
@@ -124,8 +124,8 @@ class Store::Client
     end
   end
 
-  def unmessaged_followers_all()
-    @db.query_all unmessaged_followers_query, as: { Int64, String }
+  def unmessaged_followers_all
+    @db.query_all unmessaged_followers_query, as: {Int64, String}
   end
 
   def close

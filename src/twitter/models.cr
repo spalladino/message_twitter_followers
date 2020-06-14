@@ -3,7 +3,7 @@ require "./rate_limit"
 module Twitter::Models
   class User
     include JSON::Serializable
-    
+
     # property default_profile : Bool
     # property default_profile_image : Bool
     property favourites_count : Int32
@@ -19,8 +19,9 @@ module Twitter::Models
     property statuses_count : Int32
     property suspended : Bool?
     property verified : Bool
+
     # property description : String
-    
+
     # property status : Status?
     # property entities : UserEntities?
 

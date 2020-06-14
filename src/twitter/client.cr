@@ -7,7 +7,6 @@ require "./api"
 require "./models"
 
 module Twitter
-  
   class Client
     HOST = "api.twitter.com"
 
@@ -40,7 +39,7 @@ module Twitter
 
     def post_json(path : String, object)
       fullpath = "/1.1/#{path}.json"
-      response = @http_client.post(fullpath, headers: HTTP::Headers{ "Content-Type" => "application/json" }, body: object.to_json)
+      response = @http_client.post(fullpath, headers: HTTP::Headers{"Content-Type" => "application/json"}, body: object.to_json)
       handle_response(response)
     end
 

@@ -9,7 +9,7 @@ class Executor
     cursor = @db.get_cursor("followers") || "-1"
     ids = [] of Int64
     while cursor != "0"
-      response_ids, rate = @twitter.followers_ids({ "cursor" => cursor })
+      response_ids, rate = @twitter.followers_ids({"cursor" => cursor})
       cursor = ids.next_cursor_str
       ids.concat(response_ids.ids)
       break if rate.remaining <= 1
