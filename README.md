@@ -1,18 +1,22 @@
 # message_twitter_followers
 
-TODO: Write a description here
+Crystal tool for downloading the list of Twitter followers and DM'ing them.
 
-## Installation
+See [balajis/twitter-export](https://github.com/balajis/twitter-export) for context.
 
-TODO: Write installation instructions here
+## Status
 
-## Usage
+This project is under development. Classes for storing data in a local SQLite DB and querying Twitter are set up. Main logic is in progress in `src/executor`, with tests still pending and logic for sending DMs (at a 1000 per day limit).
 
-TODO: Write usage instructions here
+## Environment
+
+While there is no environment set up, the idea was to use Github Actions as an environment. This requires setting actions on a scheduled basis (eg every few hours) to check for the current status and run as much as they can (in retrieving follower ids, follower data, or sending DMs) depending on Twitter aggressive rate limits.
+
+Whoever wants to run this, can just fork the repo, populate their API keys as a github secret, and have github actions on their repo take care of running. The running action can persist the sqlite DB in a new commit in the repo itself, since we are not storing much data.
 
 ## Development
 
-TODO: Write development instructions here
+[Install Crystal](https://crystal-lang.org/install/), and test running `crystal spec`.
 
 ## Contributing
 
@@ -24,4 +28,4 @@ TODO: Write development instructions here
 
 ## Contributors
 
-- [your-name-here](https://github.com/your-github-user) - creator and maintainer
+- [Santiago Palladino](https://github.com/spalladino) - creator and maintainer
