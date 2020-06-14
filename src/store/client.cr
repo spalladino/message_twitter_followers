@@ -113,7 +113,7 @@ class Store::Client
   end
 
   def unmessaged_followers_query
-    "SELECT id, name FROM followers WHERE message_sent_at IS NULL AND name IS NOT NULL"
+    "SELECT id, name FROM followers WHERE message_sent_at IS NULL AND name IS NOT NULL ORDER BY followers_count DESC"
   end
 
   def unmessaged_followers

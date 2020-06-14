@@ -16,7 +16,7 @@ describe Store::Client do
     db.update_followers_data([make_user(10), make_user(20), make_user(30)])
     db.unknown_followers_all.should eq([40_i64, 50_i64])
 
-    db.unmessaged_followers_all.should eq([{10_i64, "User 10"}, {20_i64, "User 20"}, {30_i64, "User 30"}])
+    db.unmessaged_followers_all.should eq([{30_i64, "User 30"}, {20_i64, "User 20"}, {10_i64, "User 10"}])
     db.mark_as_messaged([20_i64, 30_i64])
     db.unmessaged_followers_all.should eq([{10_i64, "User 10"}])
     db.mark_as_messaged([10_i64])
